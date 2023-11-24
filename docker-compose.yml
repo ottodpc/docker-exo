@@ -9,8 +9,6 @@ services:
       - registry
       - message-broker
       - gateway
-    networks:
-      - isolated_network
 
   pong:
     build:
@@ -20,8 +18,6 @@ services:
       - registry
       - message-broker
       - gateway
-    networks:
-      - isolated_network
   message-broker:
     image: "rabbitmq:management"
     ports:
@@ -35,7 +31,3 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-
-networks:
-  isolated_network:
-    driver: bridge
