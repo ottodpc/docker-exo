@@ -22,11 +22,17 @@ services:
       - gateway
     networks:
       - isolated_network
+  message-broker:
+    image: "rabbitmq:management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    depends_on:
+      - registry
   registry:
     build:
       context: ./registry
       dockerfile: Dockerfile
-    container_name: registry
     ports:
       - "8080:8080"
 
