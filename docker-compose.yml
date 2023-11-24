@@ -3,16 +3,33 @@ version: "3.8"
 services:
   ping:
     build:
-      context: ./PING
-      dockerfile: Dockerfile-ping
-    container_name: server-ping
-    ports:
-      - "4567:4567"
+      context: ./ping
+      dockerfile: Dockerfile
+    depends_on:
+      - registry
+      - message-broker
+      - gateway
+    networks:
+      - isolated_network
 
   pong:
     build:
-      context: ./PONG
-      dockerfile: Dockerfile-pong
-    container_name: pong
+      context: ./pong
+      dockerfile: Dockerfile
+    depends_on:
+      - registry
+      - message-broker
+      - gateway
+    networks:
+      - isolated_network
+  registry:
+    build:
+      context: ./registry
+      dockerfile: Dockerfile
+    container_name: registry
     ports:
-      - "5372:5372"
+      - "8080:8080"
+
+networks:
+  isolated_network:
+    driver: bridge
